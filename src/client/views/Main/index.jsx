@@ -10,7 +10,7 @@ function prepareData(input) {
   if (input == null || input.values == null) {
     return {};
   }
-  const xVals = input.values.map(val => val.x);
+  const xVals = input.values.map(val => new Date(val.x * 1000).toDateString());
   const yVals = input.values.map(val => val.y);
   const data = Object.assign({}, lineChartTemplateData.line);
   data.labels = xVals;
@@ -18,6 +18,7 @@ function prepareData(input) {
 
   return data;
 }
+
 const MainView = ({ isLoading, response, callApiThroughRedux, onInputChange, inputValue }) => {
   const data = prepareData(response);
   return (<div>
@@ -27,7 +28,6 @@ const MainView = ({ isLoading, response, callApiThroughRedux, onInputChange, inp
     <CustomButton
       text={isLoading ? 'Loading ..' : 'Submit value to API'}
       onClick={() => callApiThroughRedux(inputValue)}
-      disabled={isLoading || !inputValue}
     />
 
     <CustomInput
@@ -38,6 +38,7 @@ const MainView = ({ isLoading, response, callApiThroughRedux, onInputChange, inp
     />
   </div>);
 };
+
 MainView.propTypes = {
   isLoading: React.PropTypes.bool,
   response: React.PropTypes.object,
@@ -50,6 +51,6 @@ export default connect(
     state => ({ ...state }),
     dispatch => ({
       onInputChange: event => dispatch(changeInputValue(event.target.value)),
-      callApiThroughRedux: timeout => dispatch(requestResponseFromAPI(timeout)),
+      callApiThroughRedux: value => dispatch(requestResponseFromAPI(value)),
     }),
 )(MainView);
