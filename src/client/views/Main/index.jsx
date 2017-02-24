@@ -5,29 +5,27 @@ import CustomButton from '../../components/input/CustomButton';
 import CustomInput from '../../components/input/CustomInput';
 import LineChart from '../../components/LineChart';
 
-const MainView = ({ isLoading, response, callApiThroughRedux, onInputChange, inputValue }) =>
-  <div>
-    {response}
-    <br />
-    <LineChart />
+const MainView = ({ isLoading, response, callApiThroughRedux, onInputChange, inputValue }) => (<div>
+  <br />
+  <LineChart data={response || {}} />
 
-    <CustomButton
-      text={isLoading ? 'Loading ..' : 'Submit value to API'}
-      onClick={() => callApiThroughRedux(inputValue)}
-      disabled={isLoading || !inputValue}
-    />
+  <CustomButton
+    text={isLoading ? 'Loading ..' : 'Submit value to API'}
+    onClick={() => callApiThroughRedux(inputValue)}
+    disabled={isLoading || !inputValue}
+  />
 
-    <CustomInput
-      type="number"
-      disabled={isLoading}
-      onChange={onInputChange}
-      value={inputValue}
-    />
-  </div>;
+  <CustomInput
+    type="number"
+    disabled={isLoading}
+    onChange={onInputChange}
+    value={inputValue}
+  />
+</div>);
 
 MainView.propTypes = {
   isLoading: React.PropTypes.bool,
-  response: React.PropTypes.string,
+  response: React.PropTypes.object,
   callApiThroughRedux: React.PropTypes.func,
   onInputChange: React.PropTypes.func,
   inputValue: React.PropTypes.node,

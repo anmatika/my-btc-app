@@ -7,8 +7,10 @@ router.get('/', (req, res) =>
     res.send('Hello, world!'));
 
 const searchParam = 'search';
-// router.get('/:' + searchParam, (req, res) =>
-//     setTimeout(() => res.json("Delayed response with received value: " + req.params[searchParam] + "ms"), req.params[searchParam]));
+router.get('/:' + searchParam, (req, res) => {
+               // setTimeout(() => res.json(" received value: " + req.params[searchParam] + "ms"), req.params[searchParam]));
+               return setTimeout(() => res.json(mockData.line));
+});
 
 router.get('/getChart', function(request, response){ //root dir
 
