@@ -4,25 +4,40 @@ import { requestResponseFromAPI, changeInputValue } from '../../actions';
 import CustomButton from '../../components/input/CustomButton';
 import CustomInput from '../../components/input/CustomInput';
 import LineChart from '../../components/LineChart';
+import lineChartTemplateData from '../../components/lineChartTemplateData';
 
-const MainView = ({ isLoading, response, callApiThroughRedux, onInputChange, inputValue }) => (<div>
-  <br />
-  <LineChart data={response || {}} />
+function prepareData(input) {
+  if (input == null || input.values == null) {
+    return {};
+  }
+  const xVals = input.values.map(val => val.x);
+  const yVals = input.values.map(val => val.y);
+  const data = Object.assign({}, lineChartTemplateData.line);
+  data.labels = xVals;
+  data.datasets[0].data = yVals;
 
-  <CustomButton
-    text={isLoading ? 'Loading ..' : 'Submit value to API'}
-    onClick={() => callApiThroughRedux(inputValue)}
-    disabled={isLoading || !inputValue}
-  />
+  return data;
+}
+const MainView = ({ isLoading, response, callApiThroughRedux, onInputChange, inputValue }) => {
+  const data = prepareData(response);
+  return (<div>
+    <br />
+    <LineChart data={data} />
 
-  <CustomInput
-    type="number"
-    disabled={isLoading}
-    onChange={onInputChange}
-    value={inputValue}
-  />
-</div>);
+    <CustomButton
+      text={isLoading ? 'Loading ..' : 'Submit value to API'}
+      onClick={() => callApiThroughRedux(inputValue)}
+      disabled={isLoading || !inputValue}
+    />
 
+    <CustomInput
+      type="number"
+      disabled={isLoading}
+      onChange={onInputChange}
+      value={inputValue}
+    />
+  </div>);
+};
 MainView.propTypes = {
   isLoading: React.PropTypes.bool,
   response: React.PropTypes.object,
