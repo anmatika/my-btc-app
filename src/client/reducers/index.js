@@ -1,8 +1,8 @@
 import { handle } from 'redux-pack';
-import { REQUEST_RESPONSE_FROM_API, CHANGE_INPUT_VALUE } from '../types';
+import { GET_PRICE_FROM_API, CHANGE_INPUT_VALUE } from '../types';
 
 const initialState = {
-  inputValue: 0,
+  inputValue: 'all',
   isLoading: false,
   error: null,
   response: null,
@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case REQUEST_RESPONSE_FROM_API:
+    case GET_PRICE_FROM_API:
       return handle(state, action, {
         start: s => ({ ...s, isLoading: true, error: null, response: null }),
         finish: s => ({ ...s, isLoading: false }),

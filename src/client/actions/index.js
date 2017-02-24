@@ -1,9 +1,9 @@
-import { REQUEST_RESPONSE_FROM_API, CHANGE_INPUT_VALUE } from '../types';
+import { GET_PRICE_FROM_API, CHANGE_INPUT_VALUE } from '../types';
 
-export const requestResponseFromAPI = id =>
+export const getPriceFromApi = id =>
     ({
-      type: REQUEST_RESPONSE_FROM_API,
-      promise: fetch(`/api/${id}`)
+      type: GET_PRICE_FROM_API,
+      promise: fetch(`/api/getprice/${id}`)
             .then(res => res.json()),
     });
 
