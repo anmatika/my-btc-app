@@ -5,6 +5,8 @@ const morgan = require('morgan');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+const React = require('react');
+const Router = require('react-router');
 
 const api = require('./api');
 const webpackConfig = require('../client/config/dev.webpack.config.js');
@@ -33,8 +35,12 @@ app.use('/api', api);
 app.use(devMiddleware);
 app.use(webpackHotMiddleware(compiler));
 
-app.get('*', (req, res) =>
-    res.send(devMiddleware.fileSystem.readFileSync(generatedIndexHtmlPath)));
+app.get('*', (req, res) => {
+  if (req.url === '/') {
+    return res.send(devMiddleware.fileSystem.readFileSync(generatedIndexHtmlPath));
+  }
+  return res.send('');
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log("Listening on port :" + port));

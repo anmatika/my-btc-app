@@ -1,9 +1,10 @@
 import React from 'react';
-import LineChartContainer from '../../components/LineChart/LineChartContainer';
+import Navbar from '../../components/Navbar/Navbar';
 
-const MainView = () => (<div>
+const MainView = props => (<div>
+  <Navbar />
   <br />
-  <LineChartContainer />
+  {props.children}
 </div>);
 
 export default MainView;

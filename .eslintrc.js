@@ -7,6 +7,9 @@ module.exports = {
     "rules": {
         "max-len": [1, 120],
         "react/forbid-prop-types": ["off"],
-        "no-debugger": ["off"]
+        "no-debugger": ["off"],
+        "no-unused-vars": ["warn"],
+        "import/prefer-default-export": ["warn"],
+        "react/prop-types": ["warn"]
     }
 };
